@@ -1,4 +1,5 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
+
 class Empresa extends CI_Controller {
 	
 	public function __construct(){
@@ -8,26 +9,26 @@ class Empresa extends CI_Controller {
 		}
 	}
 	
-	public function index(){
+	public function index() {
 		$this->load->library('table');
 		$data['empresas'] = $this->db->get('empresas')->result();
 		$this->load->view('html_header');
 		$this->load->view('menu');
-		$this->load->view('listar_empresas',$data);
+		$this->load->view('empresa/listar_empresas',$data);
 		$this->load->view('html_footer');
 	}
 	
-	public function adicionar(){
+	public function adicionar() {
 		$this->load->library('form_validation');
 		$this->load->view('html_header');
 		$this->load->view('menu');
-		$this->load->view('cadastrar_empresa');
+		$this->load->view('empresa/cadastrar_empresa');
 		$this->load->view('html_footer2');
 		
 		$this->form_validation->set_rules('nome', 'nome', 'required');
 		if($this->form_validation->run() == FALSE)
 		{
-			
+			echo 'ERRO'; 
 		}
 		else
 		{
@@ -48,7 +49,7 @@ class Empresa extends CI_Controller {
 		}
 	}
 	
-	public function excluir($id){
+	public function excluir($id) {
 		$this->db->where('id',$id);
 		$this->db->delete('empresas');
 		redirect("empresa");

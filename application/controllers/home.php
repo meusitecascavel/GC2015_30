@@ -30,25 +30,23 @@ class Home extends CI_Controller {
 
 	{
 
-		$usuario = $this->input->post('login');
+		$login = $this->input->post('login');
 
 		$senha   = $this->input->post('senha');	
 
-		$this->db->where('login',$usuario);
+		$this->db->where('login',$login);
 
 		$this->db->where('senha',$senha);
 
 		$this->db->where('situacao',1);
 
+		$login = $this->db->get('usuarios')->result();
+		// Se o result = 1 que existe
 		
 
-		$usuario = $this->db->get('usuarios')->result();
+		if(count($login) === 1){
 
-		
-
-		if(count($usuario) === 1){
-
-			$dados = array('usuario' => $usuario[0]->usuario, 'logado' => TRUE);
+			$dados = array('login' => $login[0]->login, 'logado' => TRUE, 'nome' => $login[0]->nome);
 
 			$this->session->set_userdata($dados);
 
